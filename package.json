@@ -1,0 +1,21 @@
+{
+  "name": "ahmed-khaled-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/instrument-sans": "^5.2.5",
+    "@fontsource-variable/jetbrains-mono": "^5.2.5",
+    "@fontsource-variable/syne": "^5.2.5",
+    "gsap": "^3.12.7",
+    "lenis": "^1.1.20"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

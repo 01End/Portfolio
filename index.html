@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahmed Khaled — ML Engineer</title>
+    <meta name="description" content="Portfolio of Ahmed Khaled — Machine Learning Engineer & Full-Stack Developer. End-to-end ML pipelines, deep learning, and production web platforms." />
+    <meta property="og:title" content="Ahmed Khaled — ML Engineer" />
+    <meta property="og:description" content="Machine learning pipelines, deep learning models, and full-stack platforms — built end to end." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <script type="module" src="/src/main.js"></script>
+  </head>
+  <body>
+    <!-- Preloader -->
+    <div id="preloader" aria-hidden="true">
+      <div class="preloader-inner">
+        <div class="preloader-terminal mono" id="preloader-terminal"></div>
+        <div class="preloader-track">
+          <div class="preloader-bar" id="preloader-bar"></div>
+        </div>
+        <div class="preloader-percent mono" id="preloader-percent">0%</div>
+      </div>
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+    <!-- Epoch (scroll) progress -->
+    <div id="epoch-progress" aria-hidden="true">
+      <div class="epoch-fill" id="epoch-fill"></div>
+      <span class="epoch-label mono" id="epoch-label">epoch 000/100</span>
+    </div>
+
+    <!-- Grain overlay -->
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Nav -->
+    <header id="nav">
+      <a href="#hero" class="nav-logo mono" data-cursor="hover" aria-label="Home">AK<span class="accent">//</span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about" class="nav-link mono" data-scramble data-cursor="hover">about</a>
+        <a href="#skills" class="nav-link mono" data-scramble data-cursor="hover">skills</a>
+        <a href="#work" class="nav-link mono" data-scramble data-cursor="hover">work</a>
+        <a href="#contact" class="nav-link mono" data-scramble data-cursor="hover">contact</a>
+      </nav>
+      <a href="#contact" class="nav-status mono" data-cursor="hover">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="nav-status-text">open to work</span>
+      </a>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section id="hero">
+        <canvas id="neural-canvas" aria-hidden="true"></canvas>
+        <div class="hero-content">
+          <p class="hero-eyebrow mono" id="hero-eyebrow"></p>
+          <h1 class="hero-name" id="hero-name" aria-label="Ahmed Khaled"></h1>
+          <div class="hero-sub">
+            <p class="hero-title" id="hero-title"></p>
+            <p class="hero-tagline" id="hero-tagline"></p>
+          </div>
+          <div class="hero-ctas" id="hero-ctas"></div>
+        </div>
+        <div class="hero-footer">
+          <span class="mono hero-meta" id="hero-location"></span>
+          <span class="scroll-hint mono" aria-hidden="true">scroll<span class="scroll-hint-line"></span></span>
+          <span class="mono hero-meta" id="hero-meta-right"></span>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 01 — about</span>
+          <h2 class="section-title" data-reveal>The human behind<br />the models<span class="accent">.</span></h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-text" id="about-text"></div>
+          <div class="about-stats" id="about-stats"></div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section id="skills" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 02 — skills</span>
+          <h2 class="section-title" data-reveal>Trained on<br />real problems<span class="accent">.</span></h2>
+        </div>
+        <div class="skill-groups" id="skill-groups"></div>
+        <div class="marquee-wrap" id="marquee-wrap" aria-hidden="true"></div>
+      </section>
+
+      <!-- Featured work: horizontal gallery -->
+      <section id="work">
+        <div class="section-head">
+          <span class="section-label mono">// 03 — featured work</span>
+          <h2 class="section-title" data-reveal>Selected<br />experiments<span class="accent">.</span></h2>
+        </div>
+        <div class="gallery-pin" id="gallery-pin">
+          <div class="gallery-track" id="gallery-track"></div>
+        </div>
+      </section>
+
+      <!-- All projects -->
+      <section id="archive" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 04 — all projects</span>
+          <h2 class="section-title" data-reveal>The full<br />training set<span class="accent">.</span></h2>
+        </div>
+        <div class="filter-bar mono" id="filter-bar" role="tablist" aria-label="Filter projects"></div>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 05 — contact</span>
+        </div>
+        <div class="contact-inner">
+          <p class="contact-prompt mono"><span class="accent">&gt;</span> say_hello<span class="dim">()</span><span class="caret" aria-hidden="true"></span></p>
+          <h2 class="contact-title" data-reveal>Let's build<br />something<span class="accent">.</span></h2>
+          <a class="contact-email" id="contact-email" data-cursor="hover" data-scramble href="#"></a>
+          <div class="contact-socials" id="contact-socials"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer">
+      <span class="mono dim" id="footer-left"></span>
+      <span class="mono dim" id="footer-right"></span>
+    </footer>
+
+    <!-- Project modal -->
+    <div id="project-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-panel" id="modal-panel" data-lenis-prevent>
+        <button class="modal-close mono" id="modal-close" data-cursor="hover" aria-label="Close project">esc / close ×</button>
+        <div class="modal-content" id="modal-content"></div>
+      </div>
+    </div>
+  </body>
+</html>

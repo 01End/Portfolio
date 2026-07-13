@@ -1,0 +1,166 @@
+// ============================================================
+//  PROJECTS — add a new project by appending one object here.
+//  Screenshots: drop files in public/projects/<id>/ and list them
+//  in `images` (e.g. images: ['projects/my-app/1.webp']).
+//  With no images, the site renders a styled placeholder cover.
+//
+//  category: 'ml' | 'fullstack' | 'other'
+//  featured: true  → also appears in the big horizontal gallery
+//  hue: 0-360      → tint used for the placeholder cover art
+// ============================================================
+
+export const categories = {
+  ml: 'ML / AI',
+  fullstack: 'Full-Stack',
+  other: 'Other',
+};
+
+export const projects = [
+  {
+    id: 'endurance-recovery',
+    title: 'Endurance Recovery Predictor',
+    category: 'ml',
+    featured: true,
+    hue: 4,
+    year: '2026',
+    tagline: 'Predicting post-race recovery from vet-gate data',
+    description:
+      'An end-to-end ML pipeline that predicts how endurance horses recover across vet-gate loops during races — shipped as an interactive Streamlit app.',
+    problem:
+      'Endurance race teams get sparse, wide-format vet-gate readings mid-race and have to judge whether a horse will recover in time for the next loop — mostly by gut feeling.',
+    approach:
+      'Built the full pipeline: wide-to-long preprocessing with sanity checks, leakage-checked feature engineering, date-ordered train/test splits, model selection and evaluation, then monotone post-processing so predictions respect physiological ordering across loops. Covered with schema and monotonicity tests.',
+    results:
+      'A tested inference module plus a Streamlit app that predicts recovery loop-by-loop, with prior-loop completeness enforced and monotonicity guaranteed.',
+    tech: ['Python', 'Pandas', 'scikit-learn', 'Streamlit', 'Pytest'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'route-embeddings',
+    title: 'Route Session Embeddings',
+    category: 'ml',
+    featured: true,
+    hue: 210,
+    year: '2026',
+    tagline: 'Deep-learning autoencoders for route data — graduation project',
+    description:
+      'Graduation project: representation learning on route-session data using deep autoencoders, benchmarked against baseline dense models.',
+    problem:
+      'Raw route sessions are high-dimensional and hard to compare — classical features lose the structure that makes two sessions similar.',
+    approach:
+      'Designed and trained deep autoencoder architectures to compress sessions into dense embeddings, then compared baseline, embedding, and autoencoder models on downstream prediction quality.',
+    results:
+      'Learned embeddings that outperform the raw-feature baseline, packaged as reusable .h5 models with a documented training notebook.',
+    tech: ['TensorFlow', 'Keras', 'Autoencoders', 'NumPy', 'Jupyter'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'mektrackx',
+    title: 'MekTrackX Platform',
+    category: 'fullstack',
+    featured: true,
+    hue: 150,
+    year: '2026',
+    tagline: 'Full-stack operations & tracking platform',
+    description:
+      'A production-grade full-stack platform with a React frontend and API backend — built, debugged, and packaged for real deployment.',
+    problem:
+      'Operations tracking was scattered across spreadsheets and chat — no single place to see live state, history, or accountability.',
+    approach:
+      'Built a React single-page app on a Node/PostgreSQL backend with clean REST APIs, production build scripts, and environment-aware configuration for one-command startup.',
+    results:
+      'A deployable platform with a hardened production build process and a clear path to hosted rollout.',
+    tech: ['React', 'Node.js', 'PostgreSQL', 'REST', 'Vite'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'heart-disease',
+    title: 'Heart Disease Risk & Patient Clustering',
+    category: 'ml',
+    featured: false,
+    hue: 340,
+    year: '2025',
+    tagline: 'Classification + unsupervised patient segmentation',
+    description:
+      'Dual-track medical ML study: supervised risk prediction alongside unsupervised clustering to discover patient phenotypes.',
+    problem:
+      'Predicting heart-disease risk is only half the story — clinicians also want to know which kinds of patients the data contains.',
+    approach:
+      'Trained and compared classification models for risk prediction, then applied clustering to segment patients into interpretable groups, validating cluster quality and visualizing the structure.',
+    results:
+      'A calibrated risk classifier plus clinically readable patient clusters, documented with full EDA and evaluation.',
+    tech: ['Python', 'scikit-learn', 'Pandas', 'Matplotlib', 'Clustering'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'music-popularity',
+    title: 'Music Popularity Prediction',
+    category: 'ml',
+    featured: false,
+    hue: 45,
+    year: '2025',
+    tagline: 'Audio-feature regression & pattern discovery',
+    description:
+      'Predicting track popularity from audio features and mining the patterns that separate hits from misses.',
+    problem:
+      'Streaming catalogs are enormous — what measurable audio properties actually correlate with a track getting traction?',
+    approach:
+      'Explored and engineered audio features, trained regression models to predict popularity, and used pattern-discovery techniques to surface which sonic traits drive the predictions.',
+    results:
+      'A popularity model with interpretable feature importances and an analysis of the audio patterns behind popular tracks.',
+    tech: ['Python', 'Pandas', 'scikit-learn', 'Regression', 'EDA'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'rag-egyptian-schools',
+    title: 'RAG for Egyptian Schools',
+    category: 'ml',
+    featured: false,
+    hue: 275,
+    year: '2026',
+    tagline: 'Retrieval-augmented generation over school content',
+    description:
+      'A retrieval-augmented generation system that answers questions about Egyptian school material by grounding an LLM in indexed documents.',
+    problem:
+      'LLMs hallucinate on local curriculum details — students need answers grounded in the actual source material.',
+    approach:
+      'Chunked and embedded source documents into a vector index, then built a retrieval pipeline that feeds the most relevant passages to the LLM with the user’s question.',
+    results:
+      'Grounded, source-backed answers over local content instead of generic model guesses.',
+    tech: ['Python', 'LLMs', 'Embeddings', 'Vector Search', 'RAG'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+  {
+    id: 'streakfit',
+    title: 'StreakFit',
+    category: 'other',
+    featured: false,
+    hue: 120,
+    year: '2026',
+    tagline: 'Offline-first fitness & cut tracker PWA',
+    description:
+      'A zero-dependency vanilla-JS progressive web app for tracking workouts, streaks, and a cutting phase — installable and fully offline.',
+    problem:
+      'Fitness apps are bloated, online-only, and want subscriptions for what is essentially a well-designed local tracker.',
+    approach:
+      'Hand-built the whole thing in vanilla JavaScript with localStorage persistence, service-worker offline support, and a macro/workout planning workflow — deployed free on GitHub Pages.',
+    results:
+      'A fast, installable PWA used daily — no backend, no accounts, no tracking.',
+    tech: ['JavaScript', 'PWA', 'Service Workers', 'localStorage', 'GitHub Pages'],
+    images: [],
+    github: 'https://github.com/01End',
+    live: '',
+  },
+];
