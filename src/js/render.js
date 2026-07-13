@@ -77,8 +77,6 @@ function renderHero(site) {
   }
   document.getElementById('hero-ctas').innerHTML = ctas.join('');
 
-  document.getElementById('hero-location').textContent = site.location;
-  document.getElementById('hero-meta-right').textContent = `© ${new Date().getFullYear()}`;
   document.getElementById('nav-status-text').textContent = site.status;
 }
 

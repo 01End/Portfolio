@@ -45,16 +45,29 @@
         <a href="#work" class="nav-link mono" data-scramble data-cursor="hover">work</a>
         <a href="#contact" class="nav-link mono" data-scramble data-cursor="hover">contact</a>
       </nav>
-      <a href="#contact" class="nav-status mono" data-cursor="hover">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span id="nav-status-text">open to work</span>
-      </a>
+      <div class="nav-right">
+        <button id="theme-toggle" class="nav-theme mono" data-scramble data-cursor="hover" aria-label="Toggle color theme">theme[d]</button>
+        <a href="#contact" class="nav-status mono" data-cursor="hover">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="nav-status-text">open to work</span>
+        </a>
+      </div>
     </header>
+
+    <!-- HUD instrument layer -->
+    <div id="hud" aria-hidden="true">
+      <span class="hud-item hud-left mono" id="hud-clock"></span>
+      <span class="hud-item hud-center mono" id="hud-coords">0000 X 0000 Y</span>
+    </div>
+
+    <!-- Blueprint grid overlay -->
+    <div id="blueprint" aria-hidden="true"></div>
 
     <main>
       <!-- Hero -->
       <section id="hero">
         <canvas id="neural-canvas" aria-hidden="true"></canvas>
+        <div id="hero-3d" aria-hidden="true"></div>
         <div class="hero-content">
           <p class="hero-eyebrow mono" id="hero-eyebrow"></p>
           <h1 class="hero-name" id="hero-name" aria-label="Ahmed Khaled"></h1>
@@ -65,9 +78,7 @@
           <div class="hero-ctas" id="hero-ctas"></div>
         </div>
         <div class="hero-footer">
-          <span class="mono hero-meta" id="hero-location"></span>
           <span class="scroll-hint mono" aria-hidden="true">scroll<span class="scroll-hint-line"></span></span>
-          <span class="mono hero-meta" id="hero-meta-right"></span>
         </div>
       </section>
 

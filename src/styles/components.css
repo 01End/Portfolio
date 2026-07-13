@@ -110,7 +110,7 @@
 }
 
 .stat-card:hover {
-  border-color: rgba(235, 233, 226, 0.22);
+  border-color: var(--line-strong);
   transform: translateY(-4px);
 }
 
@@ -157,7 +157,7 @@
 
 .skill-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(235, 233, 226, 0.2);
+  border-color: var(--line-strong);
 }
 
 .skill-card:hover::before {
@@ -214,7 +214,7 @@
   font-size: clamp(1.3rem, 2.6vw, 2rem);
   text-transform: uppercase;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(235, 233, 226, 0.28);
+  -webkit-text-stroke: 1px var(--ink-stroke);
   transition: color 0.3s ease;
 }
 
@@ -252,7 +252,7 @@
 
 .filter-pill:hover {
   color: var(--text);
-  border-color: rgba(235, 233, 226, 0.3);
+  border-color: var(--line-strong);
 }
 
 .filter-pill.is-active {
@@ -279,9 +279,9 @@
       hsl(var(--h, 0) 72% 46% / 0.28) 0%,
       transparent 55%),
     repeating-linear-gradient(90deg,
-      rgba(235, 233, 226, 0.045) 0 1px, transparent 1px 56px),
+      var(--cover-grid) 0 1px, transparent 1px 56px),
     repeating-linear-gradient(0deg,
-      rgba(235, 233, 226, 0.045) 0 1px, transparent 1px 56px),
+      var(--cover-grid) 0 1px, transparent 1px 56px),
     var(--bg-soft);
 }
 
@@ -339,7 +339,7 @@
 }
 
 .g-card:hover {
-  border-color: rgba(235, 233, 226, 0.28);
+  border-color: var(--line-strong);
 }
 
 .g-card-media {
@@ -401,7 +401,7 @@
 
 .p-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(235, 233, 226, 0.25);
+  border-color: var(--line-strong);
 }
 
 .p-card-media {
@@ -451,7 +451,7 @@
   font-size: 0.65rem;
   letter-spacing: 0.1em;
   color: var(--text);
-  background: rgba(6, 6, 10, 0.72);
+  background: var(--card-hint-bg);
   border: 1px solid var(--line);
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
@@ -481,7 +481,7 @@
 .modal-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(4, 4, 8, 0.78);
+  background: var(--backdrop);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -507,7 +507,7 @@
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   color: var(--text-dim);
-  background: linear-gradient(rgba(11, 11, 18, 0.95), rgba(11, 11, 18, 0.75));
+  background: var(--nav-glass);
   z-index: 2;
   transition: color 0.25s ease;
 }

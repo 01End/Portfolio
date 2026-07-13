@@ -3,7 +3,7 @@
    ============================================================ */
 
 :root {
-  /* palette */
+  /* palette (dark — default) */
   --bg: #06060a;
   --bg-soft: #0b0b12;
   --surface: #10101a;
@@ -11,6 +11,13 @@
   --text: #ebe9e2;
   --text-dim: #8b8b96;
   --line: rgba(235, 233, 226, 0.09);
+  --line-strong: rgba(235, 233, 226, 0.25);
+  --ink-stroke: rgba(235, 233, 226, 0.28); /* marquee outline text */
+  --canvas-node: 235, 233, 226; /* neural constellation nodes/links (rgb triplet) */
+  --card-hint-bg: rgba(6, 6, 10, 0.72);
+  --backdrop: rgba(4, 4, 8, 0.78);
+  --nav-glass: rgba(6, 6, 10, 0.68);
+  --cover-grid: rgba(235, 233, 226, 0.045);
   --accent: #e10600; /* overridden from site.js at runtime */
   --accent-soft: rgba(225, 6, 0, 0.14);
 
@@ -34,6 +41,24 @@
   --z-preloader: 120;
 }
 
+/* light theme — toggled via THEME[·] in the nav, persisted in localStorage */
+html[data-theme='light'] {
+  --bg: #f1efe9;
+  --bg-soft: #e9e7df;
+  --surface: #e2e0d8;
+  --surface-2: #d9d7cf;
+  --text: #131318;
+  --text-dim: #6b6b74;
+  --line: rgba(19, 19, 24, 0.12);
+  --line-strong: rgba(19, 19, 24, 0.3);
+  --ink-stroke: rgba(19, 19, 24, 0.32);
+  --canvas-node: 19, 19, 24;
+  --card-hint-bg: rgba(241, 239, 233, 0.8);
+  --backdrop: rgba(233, 231, 223, 0.8);
+  --nav-glass: rgba(241, 239, 233, 0.72);
+  --cover-grid: rgba(19, 19, 24, 0.06);
+}
+
 *,
 *::before,
 *::after {
@@ -52,6 +77,7 @@ body {
   background: var(--bg);
   color: var(--text);
   overscroll-behavior-y: none;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 body {
@@ -170,7 +196,7 @@ html.no-anim .reveal-line > span { transform: none; }
 .cursor-ring {
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(235, 233, 226, 0.55);
+  border: 1px solid var(--line-strong);
   transition: border-color 0.25s ease;
 }
 
@@ -215,6 +241,83 @@ html.no-anim .reveal-line > span { transform: none; }
 
 html.no-anim .epoch-label.is-visible {
   opacity: 1;
+}
+
+/* ---- HUD instrument layer -------------------------------------- */
+
+.hud-item {
+  position: fixed;
+  bottom: 0.85rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  pointer-events: none;
+  z-index: var(--z-nav);
+}
+
+.hud-left {
+  left: 1rem;
+}
+
+.hud-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---- blueprint grid overlay ------------------------------------- */
+
+#blueprint {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bp-line {
+  position: absolute;
+  background: var(--line);
+  opacity: 0.55;
+}
+
+.bp-v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.bp-h {
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.bp-cross {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  transform: translate(-50%, -50%);
+}
+
+.bp-cross::before,
+.bp-cross::after {
+  content: '';
+  position: absolute;
+  background: var(--text-dim);
+  opacity: 0.6;
+}
+
+.bp-cross::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.bp-cross::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
 }
 
 /* ---- sections shared ------------------------------------------ */

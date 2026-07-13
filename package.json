@@ -13,7 +13,8 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.5",
     "@fontsource-variable/syne": "^5.2.5",
     "gsap": "^3.12.7",
-    "lenis": "^1.1.20"
+    "lenis": "^1.1.20",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "vite": "^6.3.5"

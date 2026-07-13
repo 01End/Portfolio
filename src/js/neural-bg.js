@@ -14,6 +14,13 @@ export function initNeuralBg(reduced) {
     .trim();
   const accentRGB = hexToRgb(accent) ?? { r: 225, g: 6, b: 0 };
 
+  // node/link ink follows the active theme
+  let nodeRGB = getNodeRGB();
+  window.addEventListener('themechange', () => {
+    nodeRGB = getNodeRGB();
+    if (reduced) draw();
+  });
+
   const LINK_DIST = 130;
   const MOUSE_DIST = 190;
 
@@ -83,7 +90,7 @@ export function initNeuralBg(reduced) {
         const d2 = dx * dx + dy * dy;
         if (d2 < LINK_DIST * LINK_DIST) {
           const alpha = (1 - Math.sqrt(d2) / LINK_DIST) * 0.14;
-          ctx.strokeStyle = `rgba(235, 233, 226, ${alpha})`;
+          ctx.strokeStyle = `rgba(${nodeRGB}, ${alpha})`;
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
@@ -113,7 +120,7 @@ export function initNeuralBg(reduced) {
 
     // nodes
     for (const n of nodes) {
-      ctx.fillStyle = 'rgba(235, 233, 226, 0.55)';
+      ctx.fillStyle = `rgba(${nodeRGB}, 0.55)`;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
@@ -167,6 +174,14 @@ export function initNeuralBg(reduced) {
 
   resize();
   start();
+}
+
+function getNodeRGB() {
+  return (
+    getComputedStyle(document.documentElement)
+      .getPropertyValue('--canvas-node')
+      .trim() || '235, 233, 226'
+  );
 }
 
 function hexToRgb(hex) {

@@ -14,6 +14,10 @@ export const site = {
   location: 'Egypt · UTC+2',
   status: 'open to work', // shown in the nav pill
 
+  // HUD instrument layer (bottom-left live clock)
+  hudLocation: 'gmt+2 eg', // short label shown before the time
+  timeZone: 'Africa/Cairo', // IANA timezone the clock ticks in
+
   // ---- theme ----------------------------------------------------
   // Change the accent once here and the whole site follows.
   accent: '#e10600',

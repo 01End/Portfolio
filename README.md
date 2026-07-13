@@ -1,8 +1,8 @@
 # Ahmed Khaled — Portfolio
 
-Dark, cinematic, single-page portfolio built from scratch. The concept: **a living ML system** — terminal boot preloader, an interactive neural constellation that reaches toward your cursor, scroll progress rendered as training epochs, and a pinned horizontal gallery of featured work.
+Dark, cinematic, single-page portfolio built from scratch. The concept: **a living ML system** — terminal boot preloader, an interactive neural constellation that reaches toward your cursor, a chrome 3D centerpiece in the hero, scroll progress rendered as training epochs, and a pinned horizontal gallery of featured work. A HUD instrument layer (live clock, cursor coordinates) and a blueprint grid overlay run across the whole site, and a `theme[d]`/`theme[l]` toggle in the nav switches between dark and light.
 
-**Stack:** Vanilla JS + [Vite](https://vitejs.dev) · [GSAP ScrollTrigger](https://gsap.com) · [Lenis](https://lenis.darkroom.engineering) smooth scroll · self-hosted fonts (Syne, Instrument Sans, JetBrains Mono). No frameworks, no templates.
+**Stack:** Vanilla JS + [Vite](https://vitejs.dev) · [GSAP ScrollTrigger](https://gsap.com) · [Lenis](https://lenis.darkroom.engineering) smooth scroll · [three.js](https://threejs.org) (lazy-loaded for the hero 3D) · self-hosted fonts (Syne, Instrument Sans, JetBrains Mono). No frameworks, no templates.
 
 ## Run it
 
@@ -19,7 +19,7 @@ Everything you'd ever want to change lives in two files:
 
 | File | Controls |
 |---|---|
-| `src/data/site.js` | Name, title, tagline, about text, stats, skills, socials, accent color, CV link |
+| `src/data/site.js` | Name, title, tagline, about text, stats, skills, socials, accent color, CV link, HUD clock label/timezone |
 | `src/data/projects.js` | Every project card, the featured gallery, filters, and modals |
 
 ### Add a new project

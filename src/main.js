@@ -21,6 +21,11 @@ import { initNeuralBg } from './js/neural-bg.js';
 import { initModal } from './js/modal.js';
 import { runPreloader } from './js/preloader.js';
 import { heroIntro, initAnimations, animateFilterChange } from './js/animations.js';
+import { restoreTheme, initTheme } from './js/theme.js';
+import { initHud } from './js/hud.js';
+import { initHero3d } from './js/hero3d.js';
+
+restoreTheme(); // before first paint of the app shell
 
 // Honors the visitor's reduced-motion preference.
 // Override for demos/testing with ?motion=1 (force on) or ?motion=0 (force off).
@@ -47,6 +52,8 @@ async function boot() {
   lenis?.stop(); // hold the page still behind the preloader
 
   initCursor();
+  initTheme();
+  initHud(site);
   initScramble(reduced);
   initNeuralBg(reduced);
   initModal(projects, lenis);
@@ -57,6 +64,9 @@ async function boot() {
   lenis?.start();
   heroIntro(reduced);
   ScrollTrigger.refresh();
+
+  // decorative — loads three.js after the intro is already playing
+  initHero3d(reduced);
 }
 
 boot();
