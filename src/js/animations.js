@@ -61,6 +61,9 @@ export function initAnimations({ lenis, reduced }) {
   // --- scroll chrome (nav glass + epoch progress) — always on ------
   const onScroll = (y) => {
     nav.classList.toggle('is-scrolled', y > 40);
+    // the label appears once "training" starts (it would collide
+    // with the hero footer meta otherwise)
+    epochLabel.classList.toggle('is-visible', y > window.innerHeight * 0.5);
     const max = document.documentElement.scrollHeight - window.innerHeight;
     const p = max > 0 ? Math.min(y / max, 1) : 0;
     epochFill.style.width = `${p * 100}%`;
@@ -126,14 +129,19 @@ export function initAnimations({ lenis, reduced }) {
   });
 
   // --- skills: cards in + marquee loops ------------------------------
-  gsap.from('.skill-card', {
-    opacity: 0,
-    y: 44,
-    duration: 0.9,
-    ease: 'power3.out',
-    stagger: 0.12,
-    scrollTrigger: { trigger: '.skill-groups', start: 'top 80%' },
-  });
+  gsap.fromTo(
+    '.skill-card',
+    { autoAlpha: 0, y: 44 },
+    {
+      autoAlpha: 1,
+      y: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      stagger: 0.12,
+      overwrite: 'auto',
+      scrollTrigger: { trigger: '.skill-groups', start: 'top 80%', once: true },
+    }
+  );
 
   document.querySelectorAll('.marquee-row').forEach((row, i) => {
     gsap.fromTo(
@@ -200,13 +208,26 @@ export function initAnimations({ lenis, reduced }) {
   });
 
   // --- contact reveal ----------------------------------------------
-  gsap.from(['.contact-prompt', '.contact-email', '.contact-socials'], {
-    opacity: 0,
-    y: 26,
-    duration: 0.8,
-    ease: 'power3.out',
-    stagger: 0.12,
-    scrollTrigger: { trigger: '#contact', start: 'top 70%' },
+  // independent tweens with once-triggers: staggered multi-target
+  // from() proved fragile against ScrollTrigger refreshes
+  [
+    ['.contact-prompt', 0],
+    ['.contact-email', 0.12],
+    ['.contact-socials', 0.24],
+  ].forEach(([sel, delay]) => {
+    gsap.fromTo(
+      sel,
+      { autoAlpha: 0, y: 26 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        delay,
+        ease: 'power3.out',
+        overwrite: 'auto',
+        scrollTrigger: { trigger: '#contact', start: 'top 75%', once: true },
+      }
+    );
   });
 
   // --- magnetic buttons (fine pointers only) --------------------------

@@ -18,18 +18,37 @@ export function initSmoothScroll() {
   gsap.ticker.lagSmoothing(0);
 
   // Anchor links scroll through Lenis (with room for the fixed nav)
+  let programmatic = false;
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href');
       if (id.length > 1 && document.querySelector(id)) {
         e.preventDefault();
+        programmatic = true;
         lenis.scrollTo(id, {
           offset: id === '#hero' ? 0 : -72,
           duration: 1.3,
+          onComplete: () => {
+            programmatic = false;
+          },
         });
       }
     });
   });
+
+  // A wheel during a programmatic scroll must cancel it — otherwise
+  // Lenis resumes toward the old anchor target and yanks the page back.
+  window.addEventListener(
+    'wheel',
+    () => {
+      if (programmatic) {
+        programmatic = false;
+        lenis.stop();
+        lenis.start();
+      }
+    },
+    { passive: true }
+  );
 
   return lenis;
 }

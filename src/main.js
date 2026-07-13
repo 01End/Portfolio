@@ -22,10 +22,23 @@ import { initModal } from './js/modal.js';
 import { runPreloader } from './js/preloader.js';
 import { heroIntro, initAnimations, animateFilterChange } from './js/animations.js';
 
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Honors the visitor's reduced-motion preference.
+// Override for demos/testing with ?motion=1 (force on) or ?motion=0 (force off).
+const motionParam = new URLSearchParams(location.search).get('motion');
+const reduced =
+  motionParam !== null
+    ? motionParam === '0'
+    : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (reduced) document.documentElement.classList.add('no-anim');
 
 async function boot() {
+  // Chrome's deferred scroll restoration fights the pinned sections
+  // (pin-spacers change the page height after load and the browser
+  // re-applies the old scroll position seconds later). The site always
+  // opens at the top — preloader into hero.
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+
   renderAll(site, projects, {
     onFilterChange: (visible) => animateFilterChange(visible, reduced),
   });
