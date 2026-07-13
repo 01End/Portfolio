@@ -151,60 +151,37 @@ export function initAnimations({ lenis, reduced }) {
     );
   });
 
-  // --- featured gallery: pinned horizontal scroll (desktop only) -----
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 901px)', () => {
-    const pin = document.getElementById('gallery-pin');
-    const track = document.getElementById('gallery-track');
-    const amount = () => Math.max(track.scrollWidth - pin.clientWidth, 0);
-
-    const tween = gsap.to(track, {
-      x: () => -amount(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: pin,
-        start: 'top 15%',
-        end: () => `+=${amount()}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    // parallax drift inside each card while the track pans
-    document.querySelectorAll('.g-card-parallax').forEach((el) => {
-      gsap.fromTo(
-        el,
-        { xPercent: -5 },
-        {
-          xPercent: 5,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: el.closest('.g-card'),
-            containerAnimation: tween,
-            start: 'left right',
-            end: 'right left',
-            scrub: true,
-          },
-        }
-      );
-    });
-  });
-
-  // --- grid cards batch in --------------------------------------------
-  gsap.set('.p-card', { autoAlpha: 0, y: 40 });
-  ScrollTrigger.batch('.p-card', {
+  // --- work showcase: reveals + vertical parallax ---------------------
+  gsap.set('.w-item', { autoAlpha: 0, y: 64 });
+  ScrollTrigger.batch('.w-item', {
     start: 'top 88%',
     once: true,
     onEnter: (batch) =>
       gsap.to(batch, {
         autoAlpha: 1,
         y: 0,
-        duration: 0.8,
+        duration: 1,
         ease: 'power3.out',
-        stagger: 0.08,
+        stagger: 0.12,
       }),
+  });
+
+  // covers drift slowly inside their frames as they cross the viewport
+  document.querySelectorAll('.w-parallax').forEach((el) => {
+    gsap.fromTo(
+      el,
+      { yPercent: -7 },
+      {
+        yPercent: 7,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el.closest('.w-item'),
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      }
+    );
   });
 
   // --- contact reveal ----------------------------------------------
@@ -249,15 +226,3 @@ export function initAnimations({ lenis, reduced }) {
   }
 }
 
-// Re-animate the visible cards after a filter change, then let
-// ScrollTrigger re-measure the page (grid height changed).
-export function animateFilterChange(visibleCards, reduced) {
-  if (!reduced && visibleCards.length) {
-    gsap.fromTo(
-      visibleCards,
-      { autoAlpha: 0, y: 22 },
-      { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.05 }
-    );
-  }
-  ScrollTrigger.refresh();
-}

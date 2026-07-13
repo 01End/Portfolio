@@ -339,52 +339,110 @@ html.no-anim .hero-name .char { transform: none; }
   gap: 1.2rem;
 }
 
-/* ---- work (featured gallery) ------------------------------------------ */
+/* ---- work (editorial showcase) ------------------------------------------ */
 
-#work {
-  overflow: clip;
-}
-
-.gallery-pin {
-  position: relative;
-}
-
-.gallery-track {
-  display: flex;
-  align-items: stretch;
-  gap: clamp(1.2rem, 3vw, 2.5rem);
-  height: min(72vh, 640px);
-  width: max-content;
-  padding-right: var(--pad);
-  will-change: transform;
-}
-
-/* wider-than-card wrapper so the parallax drift never shows gaps */
-.g-card-parallax {
-  position: absolute;
-  inset: 0 -10%;
-}
-
-.gallery-end {
-  flex: 0 0 auto;
-  align-self: center;
+.work-flow {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  padding: 0 4vw;
+  gap: clamp(4.5rem, 11vh, 9rem);
 }
 
-.gallery-end-title {
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
-  max-width: 10ch;
+.w-item {
+  position: relative;
+  width: 100%;
 }
 
-/* ---- archive (grid) ----------------------------------------------------- */
+.w-item--full {
+  max-width: min(100%, 1180px);
+}
 
-.project-grid {
+.w-item--full.w-right {
+  align-self: flex-end;
+}
+
+.w-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 8.5;
+  border: 1px solid var(--line);
+  transition: border-color 0.4s ease;
+}
+
+.w-item--half .w-media {
+  aspect-ratio: 4 / 3;
+}
+
+.w-item:hover .w-media {
+  border-color: var(--line-strong);
+}
+
+/* taller-than-frame wrapper so the vertical parallax never shows gaps */
+.w-parallax {
+  position: absolute;
+  inset: -12% 0;
+}
+
+.w-media .cover,
+.w-media img {
+  transform: scale(1.05);
+  transition: transform 0.8s var(--ease-out);
+}
+
+.w-item:hover .w-media .cover,
+.w-item:hover .w-media img {
+  transform: scale(1.005);
+}
+
+.w-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  padding: 0.28rem 0.6rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+}
+
+.w-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 0.9rem;
+}
+
+.w-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.w-tagline {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-top: 0.25rem;
+  max-width: 52ch;
+}
+
+.w-info {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.w-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 4.5rem);
+  align-items: start;
+}
+
+.w-row .w-item:nth-child(even) {
+  margin-top: clamp(3rem, 9vh, 7.5rem);
 }
 
 /* ---- contact ------------------------------------------------------------- */
@@ -445,22 +503,6 @@ html.no-anim .hero-name .char { transform: none; }
    REDUCED MOTION — static, fully readable fallbacks
    ============================================================ */
 
-html.no-anim .gallery-track {
-  flex-direction: column;
-  height: auto;
-  width: 100%;
-  padding-right: 0;
-}
-
-html.no-anim .g-card {
-  width: 100%;
-  grid-template-rows: auto auto;
-}
-
-html.no-anim .g-card-media {
-  aspect-ratio: 16 / 10;
-}
-
 html.no-anim .about-line {
   background: none;
   color: var(--text);
@@ -487,22 +529,9 @@ section {
 
   .skill-groups { grid-template-columns: 1fr; }
 
-  /* featured gallery falls back to a vertical stack */
-  .gallery-track {
-    flex-direction: column;
-    height: auto;
-    width: 100%;
-    padding-right: 0;
-  }
-
-  .g-card {
-    width: 100%;
-    grid-template-rows: auto auto;
-  }
-
-  .g-card-media { aspect-ratio: 16 / 10; }
-
-  .gallery-end { padding: 1rem 0 0; }
+  /* work pairs stack into a single column */
+  .w-row { grid-template-columns: 1fr; }
+  .w-row .w-item:nth-child(even) { margin-top: 0; }
 }
 
 @media (max-width: 600px) {
@@ -515,7 +544,6 @@ section {
 
   .hero-sub { margin-top: 1.4rem; }
 
-  .g-card-info { flex-direction: column; align-items: flex-start; }
 
   .epoch-label { display: none; }
 

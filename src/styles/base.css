@@ -18,6 +18,8 @@
   --backdrop: rgba(4, 4, 8, 0.78);
   --nav-glass: rgba(6, 6, 10, 0.68);
   --cover-grid: rgba(235, 233, 226, 0.045);
+  --tag-bg: #d8fb43; /* acid tag chips on work covers */
+  --tag-text: #0c0c10;
   --accent: #e10600; /* overridden from site.js at runtime */
   --accent-soft: rgba(225, 6, 0, 0.14);
 

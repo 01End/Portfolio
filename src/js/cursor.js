@@ -38,7 +38,7 @@ export function initCursor() {
     gsap.to([dot, ring], { opacity: 0, duration: 0.3 });
   });
 
-  const HOVERABLE = 'a, button, [data-cursor="hover"], .p-card, .g-card, .filter-pill';
+  const HOVERABLE = 'a, button, [data-cursor="hover"], .w-item';
 
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(HOVERABLE)) {

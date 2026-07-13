@@ -20,7 +20,7 @@ import { initScramble } from './js/scramble.js';
 import { initNeuralBg } from './js/neural-bg.js';
 import { initModal } from './js/modal.js';
 import { runPreloader } from './js/preloader.js';
-import { heroIntro, initAnimations, animateFilterChange } from './js/animations.js';
+import { heroIntro, initAnimations } from './js/animations.js';
 import { restoreTheme, initTheme } from './js/theme.js';
 import { initHud } from './js/hud.js';
 import { initHero3d } from './js/hero3d.js';
@@ -44,9 +44,7 @@ async function boot() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
-  renderAll(site, projects, {
-    onFilterChange: (visible) => animateFilterChange(visible, reduced),
-  });
+  renderAll(site, projects);
 
   const lenis = reduced ? null : initSmoothScroll();
   lenis?.stop(); // hold the page still behind the preloader

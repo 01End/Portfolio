@@ -141,94 +141,49 @@ function renderSkills(site) {
     rowHTML([...rowA, ...rowA]) + rowHTML([...rowB, ...rowB]);
 }
 
-// ---- featured gallery ------------------------------------------------
+// ---- work: editorial showcase ------------------------------------------
+// Featured projects get full-width blocks that alternate left/right;
+// the rest flow in staggered two-up pairs — one continuous scroll.
 
-function renderGallery(projects) {
-  const featured = projects.filter((p) => p.featured);
-  const track = document.getElementById('gallery-track');
-
-  track.innerHTML =
-    featured
-      .map(
-        (p, i) => `<article class="g-card" data-project="${esc(p.id)}" data-cursor="hover">
-          <div class="g-card-media">
-            <div class="g-card-parallax">${coverHTML(p, i)}</div>
-          </div>
-          <div class="g-card-info">
-            <div>
-              <h3 class="g-card-title">${esc(p.title)}</h3>
-              <p class="g-card-tagline">${esc(p.tagline)}</p>
-            </div>
-            <span class="g-card-open mono">open ↗</span>
-          </div>
-        </article>`
-      )
-      .join('') +
-    `<div class="gallery-end">
-      <h3 class="gallery-end-title">There's more in the archive<span class="accent">.</span></h3>
-      <a href="#archive" class="btn magnetic" data-cursor="hover">all projects <span class="btn-arrow">↓</span></a>
-    </div>`;
-}
-
-// ---- archive grid + filters -------------------------------------------
-
-function cardHTML(p, index) {
-  const tech = p.tech.slice(0, 4);
-  const extra = p.tech.length - tech.length;
-  return `<article class="p-card" data-project="${esc(p.id)}" data-category="${esc(p.category)}" data-cursor="hover">
-    <div class="p-card-media">${coverHTML(p, index)}</div>
-    <div class="p-card-body">
-      <span class="p-card-cat">${esc(categories[p.category] ?? p.category)} · ${esc(p.year)}</span>
-      <h3 class="p-card-title">${esc(p.title)}</h3>
-      <p class="p-card-tagline">${esc(p.tagline)}</p>
-      <div class="p-card-tech">${chipsHTML(tech)}${extra > 0 ? `<span class="chip">+${extra}</span>` : ''}</div>
+function workItemHTML(p, index, variant, extraClass = '') {
+  const info = [esc(p.year), esc(categories[p.category] ?? p.category).toLowerCase()]
+    .filter(Boolean)
+    .join(' · ');
+  const arrow = p.live || p.github ? ' <span class="accent">↗</span>' : '';
+  return `<article class="w-item w-item--${variant} ${extraClass}" data-project="${esc(p.id)}" data-cursor="hover">
+    <div class="w-media">
+      <span class="w-tag mono">${esc(categories[p.category] ?? p.category).toLowerCase()}</span>
+      <div class="w-parallax">${coverHTML(p, index)}</div>
     </div>
-    <span class="p-card-hint">open ↗</span>
+    <div class="w-meta">
+      <div>
+        <h3 class="w-name mono">${esc(p.title)}</h3>
+        <p class="w-tagline">${esc(p.tagline)}</p>
+      </div>
+      <span class="w-info mono">${info}${arrow}</span>
+    </div>
   </article>`;
 }
 
-function renderGrid(projects, onFilterChange) {
-  const grid = document.getElementById('project-grid');
-  const bar = document.getElementById('filter-bar');
+function renderWork(projects) {
+  const flow = document.getElementById('work-flow');
+  const featured = projects.filter((p) => p.featured);
+  const rest = projects.filter((p) => !p.featured);
 
-  grid.innerHTML = projects.map((p, i) => cardHTML(p, i)).join('');
-
-  const counts = { all: projects.length };
-  projects.forEach((p) => {
-    counts[p.category] = (counts[p.category] ?? 0) + 1;
-  });
-
-  const pills = [
-    { key: 'all', label: 'all' },
-    ...Object.keys(categories)
-      .filter((k) => counts[k])
-      .map((k) => ({ key: k, label: categories[k].toLowerCase() })),
-  ];
-
-  bar.innerHTML = pills
-    .map(
-      (f, i) => `<button class="filter-pill${i === 0 ? ' is-active' : ''}" role="tab"
-        aria-selected="${i === 0}" data-filter="${f.key}" data-cursor="hover">
-        ${esc(f.label)}<span class="filter-count">${counts[f.key]}</span>
-      </button>`
+  let html = featured
+    .map((p, i) =>
+      workItemHTML(p, projects.indexOf(p), 'full', i % 2 ? 'w-right' : '')
     )
     .join('');
 
-  bar.addEventListener('click', (e) => {
-    const pill = e.target.closest('.filter-pill');
-    if (!pill) return;
-    bar.querySelectorAll('.filter-pill').forEach((b) => {
-      b.classList.toggle('is-active', b === pill);
-      b.setAttribute('aria-selected', b === pill);
-    });
-    const key = pill.dataset.filter;
-    const cards = [...grid.querySelectorAll('.p-card')];
-    cards.forEach((card) => {
-      card.style.display =
-        key === 'all' || card.dataset.category === key ? '' : 'none';
-    });
-    onFilterChange?.(cards.filter((c) => c.style.display !== 'none'));
-  });
+  for (let i = 0; i < rest.length; i += 2) {
+    const pair = rest.slice(i, i + 2);
+    html += `<div class="w-row">${pair
+      .map((p) => workItemHTML(p, projects.indexOf(p), 'half'))
+      .join('')}</div>`;
+  }
+
+  flow.innerHTML = html;
 }
 
 // ---- contact + footer -----------------------------------------------
@@ -253,12 +208,11 @@ function renderContact(site) {
 
 // ---- entry ------------------------------------------------------------
 
-export function renderAll(site, projects, { onFilterChange } = {}) {
+export function renderAll(site, projects) {
   applyTheme(site);
   renderHero(site);
   renderAbout(site);
   renderSkills(site);
-  renderGallery(projects);
-  renderGrid(projects, onFilterChange);
+  renderWork(projects);
   renderContact(site);
 }
