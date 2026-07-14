@@ -4,6 +4,10 @@ Dark, cinematic, single-page portfolio built from scratch. The concept: **a livi
 
 **Stack:** Vanilla JS + [Vite](https://vitejs.dev) · [GSAP ScrollTrigger](https://gsap.com) · [Lenis](https://lenis.darkroom.engineering) smooth scroll · [three.js](https://threejs.org) (lazy-loaded for the hero 3D) · self-hosted fonts (Syne, Instrument Sans, JetBrains Mono). No frameworks, no templates.
 
+**The playground** (`// 05`) is a real neural network: an MLP (784→128→64→10, 97.3% on MNIST) trained with `scripts/train_digits.py`, its weights shipped as raw Float32 (`public/model/digits.dat`) and executed by a from-scratch JS inference engine ([src/js/nn.js](src/js/nn.js)) — verified to match the Python model's logits exactly (`node scripts/verify_digits.mjs`). Retrain any time with `python scripts/train_digits.py`.
+
+**The journey timeline** reads from `timeline` in `src/data/site.js` — the shipped entries are placeholders; replace them with your real education/work/certificates.
+
 ## Run it
 
 ```bash
