@@ -46,6 +46,33 @@ export const site = {
     { value: 3, suffix: '+', label: 'years writing code' },
   ],
 
+  // ---- journey (timeline) ----------------------------------------
+  // PLACEHOLDERS — replace with your real education / work / certs.
+  // tag: 'education' | 'work' | 'cert'
+  timeline: [
+    {
+      period: '2021 — 2025',
+      title: 'B.Sc. — [your degree]',
+      place: '[your university]',
+      note: 'Graduation project: deep-learning route embeddings with autoencoders.',
+      tag: 'education',
+    },
+    {
+      period: '2025',
+      title: '[internship / job title]',
+      place: '[company]',
+      note: '[one line about what you built or shipped there]',
+      tag: 'work',
+    },
+    {
+      period: '2026',
+      title: '[certificate name]',
+      place: '[issuer — e.g. DeepLearning.AI]',
+      note: '[replace these entries in src/data/site.js]',
+      tag: 'cert',
+    },
+  ],
+
   // ---- skills ---------------------------------------------------
   skillGroups: [
     {

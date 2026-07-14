@@ -1,0 +1,9 @@
+{
+  "name": "Ahmed Khaled — ML Engineer",
+  "short_name": "AK//",
+  "icons": [{ "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }],
+  "start_url": ".",
+  "display": "browser",
+  "background_color": "#06060a",
+  "theme_color": "#06060a"
+}

@@ -151,6 +151,21 @@ export function initAnimations({ lenis, reduced }) {
     );
   });
 
+  // --- journey timeline: staggered entrance ----------------------------
+  gsap.set('.tl-item', { autoAlpha: 0, x: -22 });
+  ScrollTrigger.batch('.tl-item', {
+    start: 'top 88%',
+    once: true,
+    onEnter: (batch) =>
+      gsap.to(batch, {
+        autoAlpha: 1,
+        x: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        stagger: 0.12,
+      }),
+  });
+
   // --- work showcase: reveals + vertical parallax ---------------------
   gsap.set('.w-item', { autoAlpha: 0, y: 64 });
   ScrollTrigger.batch('.w-item', {

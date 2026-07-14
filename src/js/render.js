@@ -141,6 +141,27 @@ function renderSkills(site) {
     rowHTML([...rowA, ...rowA]) + rowHTML([...rowB, ...rowB]);
 }
 
+// ---- journey (timeline) --------------------------------------------------
+
+function renderTimeline(site) {
+  const box = document.getElementById('timeline');
+  if (!box || !site.timeline?.length) return;
+  box.innerHTML = site.timeline
+    .map(
+      (t) => `<div class="tl-item">
+        <span class="tl-node" aria-hidden="true"></span>
+        <div class="tl-head">
+          <span class="tl-period mono">${esc(t.period)}</span>
+          <span class="chip">${esc(t.tag)}</span>
+        </div>
+        <h3 class="tl-title">${esc(t.title)}</h3>
+        <p class="tl-place mono">${esc(t.place)}</p>
+        ${t.note ? `<p class="tl-note">${esc(t.note)}</p>` : ''}
+      </div>`
+    )
+    .join('');
+}
+
 // ---- work: editorial showcase ------------------------------------------
 // Featured projects get full-width blocks that alternate left/right;
 // the rest flow in staggered two-up pairs — one continuous scroll.
@@ -213,6 +234,7 @@ export function renderAll(site, projects) {
   renderHero(site);
   renderAbout(site);
   renderSkills(site);
+  renderTimeline(site);
   renderWork(projects);
   renderContact(site);
 }

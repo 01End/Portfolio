@@ -6,9 +6,34 @@
     <title>Ahmed Khaled — ML Engineer</title>
     <meta name="description" content="Portfolio of Ahmed Khaled — Machine Learning Engineer & Full-Stack Developer. End-to-end ML pipelines, deep learning, and production web platforms." />
     <meta property="og:title" content="Ahmed Khaled — ML Engineer" />
-    <meta property="og:description" content="Machine learning pipelines, deep learning models, and full-stack platforms — built end to end." />
+    <meta property="og:description" content="Machine learning pipelines, deep learning models, and full-stack platforms — built end to end. Draw a digit and try my model live." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://01end.github.io/Portfolio/" />
+    <meta property="og:site_name" content="Ahmed Khaled — ML Engineer" />
+    <meta property="og:image" content="https://01end.github.io/Portfolio/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ahmed Khaled — ML Engineer" />
+    <meta name="twitter:description" content="ML pipelines, deep learning, and full-stack platforms — with a live in-browser ML demo." />
+    <meta name="twitter:image" content="https://01end.github.io/Portfolio/og.png" />
+    <link rel="canonical" href="https://01end.github.io/Portfolio/" />
+    <meta name="theme-color" content="#06060a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f1efe9" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Ahmed Khaled",
+      "jobTitle": "Machine Learning Engineer",
+      "url": "https://01end.github.io/Portfolio/",
+      "sameAs": ["https://github.com/01End"],
+      "knowsAbout": ["Machine Learning", "Deep Learning", "Retrieval-Augmented Generation", "Data Science", "Full-Stack Development"]
+    }
+    </script>
     <script type="module" src="/src/main.js"></script>
   </head>
   <body>
@@ -43,6 +68,7 @@
         <a href="#about" class="nav-link mono" data-scramble data-cursor="hover">about</a>
         <a href="#skills" class="nav-link mono" data-scramble data-cursor="hover">skills</a>
         <a href="#work" class="nav-link mono" data-scramble data-cursor="hover">work</a>
+        <a href="#playground" class="nav-link mono" data-scramble data-cursor="hover">play</a>
         <a href="#contact" class="nav-link mono" data-scramble data-cursor="hover">contact</a>
       </nav>
       <div class="nav-right">
@@ -104,13 +130,42 @@
         <div class="marquee-wrap" id="marquee-wrap" aria-hidden="true"></div>
       </section>
 
+      <!-- Journey: experience timeline -->
+      <section id="journey" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 03 — journey</span>
+          <h2 class="section-title" data-reveal>The road<br />so far<span class="accent">.</span></h2>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
       <!-- Work: editorial showcase -->
       <section id="work" class="section">
         <div class="section-head">
-          <span class="section-label mono">// 03 — work</span>
+          <span class="section-label mono">// 04 — work</span>
           <h2 class="section-title" data-reveal>Selected<br />experiments<span class="accent">.</span></h2>
         </div>
         <div class="work-flow" id="work-flow"></div>
+      </section>
+
+      <!-- Playground: draw a digit, the network reads it -->
+      <section id="playground" class="section">
+        <div class="section-head">
+          <span class="section-label mono">// 05 — playground</span>
+          <h2 class="section-title" data-reveal>Draw a digit<span class="accent">.</span></h2>
+          <p class="play-sub">A neural network I trained, running on an inference engine written from scratch — no libraries, right here in your browser.</p>
+        </div>
+        <div class="play-grid">
+          <div class="play-left">
+            <canvas id="play-pad" width="280" height="280" aria-label="Drawing pad — draw a digit from 0 to 9"></canvas>
+            <div class="play-controls">
+              <button id="play-clear" class="btn" data-cursor="hover">clear</button>
+              <span class="play-top mono" id="play-top" aria-live="polite">?</span>
+            </div>
+          </div>
+          <div class="play-bars" id="play-bars" aria-hidden="true"></div>
+        </div>
+        <p class="play-meta mono" id="play-meta">scroll closer to load the weights…</p>
       </section>
 
       <!-- Warp finale: zoom into a neuron, travel through the model -->
@@ -126,14 +181,14 @@
             </div>
           </div>
           <div class="warp-node" id="warp-node" aria-hidden="true"></div>
-          <span class="warp-label mono" aria-hidden="true">// 04 — keep scrolling</span>
+          <span class="warp-label mono" aria-hidden="true">// keep scrolling</span>
         </div>
       </section>
 
       <!-- Contact -->
       <section id="contact" class="section">
         <div class="section-head">
-          <span class="section-label mono">// 05 — contact</span>
+          <span class="section-label mono">// 06 — contact</span>
         </div>
         <div class="contact-inner">
           <p class="contact-prompt mono"><span class="accent">&gt;</span> say_hello<span class="dim">()</span><span class="caret" aria-hidden="true"></span></p>

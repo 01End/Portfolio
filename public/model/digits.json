@@ -1,0 +1,19 @@
+{
+  "layers": [
+    {
+      "in": 784,
+      "out": 128
+    },
+    {
+      "in": 128,
+      "out": 64
+    },
+    {
+      "in": 64,
+      "out": 10
+    }
+  ],
+  "params": 109386,
+  "testAccuracy": 0.9729,
+  "note": "MLP trained on MNIST; raw Float32; kernel row-major (in,out)"
+}
