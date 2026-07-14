@@ -1,7 +1,7 @@
 [
   {
     "id": "endurance-recovery",
-    "title": "Endurance Recovery Predictor",
+    "title": "Endurance Recovery Time Predictor",
     "category": "ml",
     "featured": true,
     "hue": 4,
