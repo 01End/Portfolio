@@ -18,6 +18,7 @@
   --backdrop: rgba(4, 4, 8, 0.78);
   --nav-glass: rgba(6, 6, 10, 0.68);
   --cover-grid: rgba(235, 233, 226, 0.045);
+  --scroll-track: rgba(235, 233, 226, 0.05); /* scrollbar gauge rail */
   --tag-bg: #d8fb43; /* acid tag chips on work covers */
   --tag-text: #0c0c10;
   --accent: #e10600; /* overridden from site.js at runtime */
@@ -59,6 +60,7 @@ html[data-theme='light'] {
   --backdrop: rgba(233, 231, 223, 0.8);
   --nav-glass: rgba(241, 239, 233, 0.72);
   --cover-grid: rgba(19, 19, 24, 0.06);
+  --scroll-track: rgba(19, 19, 24, 0.06);
 }
 
 *,
@@ -69,9 +71,43 @@ html[data-theme='light'] {
   padding: 0;
 }
 
+/* ---- scrollbar --------------------------------------------------- */
+
+/* HUD-style gauge: a faint rail with a crisp accent pill that grows on
+   grab. The thumb sits inside a transparent border, so shrinking the
+   border on hover/active fattens the pill — a clean tactile cue. */
 html {
   scrollbar-width: thin;
-  scrollbar-color: var(--surface-2) var(--bg);
+  scrollbar-color: var(--accent) var(--scroll-track);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  min-height: 44px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 2px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  border-width: 1px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 html,
