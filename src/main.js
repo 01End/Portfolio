@@ -24,6 +24,7 @@ import { heroIntro, initAnimations } from './js/animations.js';
 import { restoreTheme, initTheme } from './js/theme.js';
 import { initHud } from './js/hud.js';
 import { initHero3d } from './js/hero3d.js';
+import { initWarp } from './js/warp.js';
 
 restoreTheme(); // before first paint of the app shell
 
@@ -56,6 +57,7 @@ async function boot() {
   initNeuralBg(reduced);
   initModal(projects, lenis);
   initAnimations({ lenis, reduced });
+  initWarp(reduced);
 
   await runPreloader(reduced);
 

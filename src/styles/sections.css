@@ -445,6 +445,110 @@ html.no-anim .hero-name .char { transform: none; }
   margin-top: clamp(3rem, 9vh, 7.5rem);
 }
 
+/* ---- warp finale ----------------------------------------------------------- */
+
+#warp {
+  padding: var(--section-gap) 0 0;
+}
+
+.warp-pin {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/* the interior of the machine is dark in both themes */
+.warp-inner {
+  position: absolute;
+  inset: 0;
+  background: #050509;
+  will-change: clip-path;
+}
+
+#warp-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* the neuron — a giant echo of the cursor dot + ring */
+.warp-node {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 34px var(--accent-soft);
+  will-change: transform;
+}
+
+.warp-node::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px var(--accent);
+}
+
+.warp-phrases {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0 clamp(1.2rem, 6vw, 4rem);
+}
+
+.warp-phrase {
+  grid-area: 1 / 1;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 4.6vw, 3.6rem);
+  color: #eceadf; /* interior is always dark — text stays light */
+  max-width: 22ch;
+}
+
+.warp-accent {
+  color: var(--accent);
+}
+
+.warp-label {
+  position: absolute;
+  bottom: 1.1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+
+/* static fallback: door open, closing line visible */
+html.no-anim .warp-inner {
+  clip-path: none !important;
+}
+
+html.no-anim .warp-node,
+html.no-anim .warp-label {
+  display: none;
+}
+
+html.no-anim .warp-phrase {
+  opacity: 0;
+}
+
+html.no-anim .warp-phrase:last-child {
+  opacity: 1;
+}
+
 /* ---- contact ------------------------------------------------------------- */
 
 #contact {
@@ -522,7 +626,8 @@ section {
    ============================================================ */
 
 @media (max-width: 900px) {
-  .nav-links { display: none; }
+  .nav-links { gap: 1.1rem; }
+  .nav-link { font-size: 0.72rem; }
 
   .about-grid { grid-template-columns: 1fr; }
   .about-stats { position: static; grid-template-columns: repeat(3, 1fr); }
@@ -534,11 +639,27 @@ section {
   .w-row .w-item:nth-child(even) { margin-top: 0; }
 }
 
+@media (max-width: 700px) {
+  /* nav: keep the links, drop the status pill */
+  .nav-status { display: none; }
+}
+
 @media (max-width: 600px) {
   :root { --pad: 1.1rem; }
 
+  #nav { padding: 0.9rem var(--pad); gap: 0.8rem; }
+  .nav-links { gap: 0.85rem; }
+  .nav-link,
+  .nav-theme { font-size: 0.66rem; }
+  .nav-logo { font-size: 0.9rem; }
+
   .hud-item { display: none; }
   .bp-cross { display: none; }
+
+  .w-meta { flex-direction: column; gap: 0.35rem; }
+  .w-info { order: -1; }
+
+  .warp-phrase { font-size: clamp(1.35rem, 7.2vw, 2rem); }
 
   .about-stats { grid-template-columns: 1fr; }
 
