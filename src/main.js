@@ -26,6 +26,7 @@ import { initHud } from './js/hud.js';
 import { initHero3d } from './js/hero3d.js';
 import { initWarp } from './js/warp.js';
 import { initPlayground } from './js/playground.js';
+import { initScrollbar } from './js/scrollbar.js';
 
 restoreTheme(); // before first paint of the app shell
 
@@ -65,6 +66,7 @@ async function boot() {
   lenis?.start();
   heroIntro(reduced);
   ScrollTrigger.refresh();
+  initScrollbar(lenis);
 
   // decorative — loads three.js after the intro is already playing
   initHero3d(reduced);

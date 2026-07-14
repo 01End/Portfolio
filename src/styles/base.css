@@ -110,6 +110,70 @@ html {
   background: transparent;
 }
 
+/* when the custom scrollbar is active, hide the native root bar
+   (inner scrollers like the modal keep their styled native bar) */
+html.custom-sb {
+  scrollbar-width: none;
+}
+html.custom-sb::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ---- custom scrollbar (haoqi-style edge rail) ------------------- */
+
+.scrollbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 100vh;
+  height: 100svh;
+  z-index: var(--z-nav);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* the faint full-height rail */
+.scrollbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 4px;
+  width: 2px;
+  background: var(--scroll-track);
+}
+
+.scrollbar.is-visible {
+  opacity: 1;
+}
+
+.scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--accent);
+  pointer-events: auto;
+  cursor: grab;
+  will-change: transform;
+  transition: width 0.16s var(--ease-out), box-shadow 0.2s ease;
+}
+
+.scrollbar:hover .scrollbar-thumb {
+  width: 6px;
+}
+
+.scrollbar-thumb.is-drag,
+.scrollbar.is-drag .scrollbar-thumb {
+  width: 6px;
+  cursor: grabbing;
+  box-shadow: 0 0 10px var(--accent-soft);
+}
+
 html,
 body {
   background: var(--bg);
