@@ -29,13 +29,12 @@ import { initPlayground } from './js/playground.js';
 
 restoreTheme(); // before first paint of the app shell
 
-// Honors the visitor's reduced-motion preference.
-// Override for demos/testing with ?motion=1 (force on) or ?motion=0 (force off).
+// The full motion experience plays for everyone by default — a portfolio's
+// impact lives in the animation, and many machines have the OS "reduce motion"
+// flag on for performance reasons rather than a real need for stillness.
+// Anyone who genuinely wants the static version can append ?motion=0.
 const motionParam = new URLSearchParams(location.search).get('motion');
-const reduced =
-  motionParam !== null
-    ? motionParam === '0'
-    : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced = motionParam === '0';
 if (reduced) document.documentElement.classList.add('no-anim');
 
 async function boot() {
