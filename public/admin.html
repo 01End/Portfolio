@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>AK// admin</title>
+<style>
+  :root {
+    --bg: #06060a; --surface: #10101a; --surface2: #16161f;
+    --text: #ebe9e2; --dim: #8b8b96; --line: rgba(235,233,226,.12);
+    --accent: #e10600; --ok: #43d17c; --tag: #d8fb43;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Consolas', 'JetBrains Mono', monospace;
+    font-size: 14px; line-height: 1.6;
+    max-width: 860px; margin: 0 auto; padding: 2rem 1.2rem 6rem;
+  }
+  h1 { font-size: 1.1rem; letter-spacing: .06em; margin-bottom: .3rem; }
+  h1 .accent { color: var(--accent); }
+  .sub { color: var(--dim); font-size: .8rem; margin-bottom: 2rem; }
+  fieldset { border: 1px solid var(--line); padding: 1.2rem; margin-bottom: 1.5rem; }
+  legend { padding: 0 .6rem; color: var(--dim); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+  label { display: block; font-size: .72rem; color: var(--dim); letter-spacing: .08em; margin: 1rem 0 .3rem; text-transform: uppercase; }
+  input[type=text], input[type=password], input[type=url], textarea, select {
+    width: 100%; background: var(--surface); color: var(--text);
+    border: 1px solid var(--line); padding: .55rem .7rem; font: inherit;
+  }
+  input:focus, textarea:focus, select:focus { outline: 1px solid var(--accent); }
+  textarea { min-height: 72px; resize: vertical; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .row3 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; }
+  @media (max-width: 620px) { .row, .row3 { grid-template-columns: 1fr; } }
+  button {
+    font: inherit; cursor: pointer; border: 1px solid var(--line);
+    background: var(--surface2); color: var(--text);
+    padding: .55rem 1.1rem; letter-spacing: .08em; font-size: .78rem; text-transform: lowercase;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.danger:hover { border-color: var(--accent); color: var(--accent); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  .plist { display: grid; gap: .5rem; }
+  .pitem {
+    display: flex; align-items: center; gap: .8rem;
+    border: 1px solid var(--line); background: var(--surface); padding: .7rem .9rem;
+  }
+  .pitem .grow { flex: 1; min-width: 0; }
+  .pitem .t { font-weight: 700; }
+  .pitem .m { color: var(--dim); font-size: .72rem; }
+  .badge { background: var(--tag); color: #0c0c10; font-size: .62rem; padding: .1rem .4rem; letter-spacing: .08em; }
+  .imgs { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .6rem; }
+  .imgs figure { position: relative; width: 110px; }
+  .imgs img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border: 1px solid var(--line); display: block; }
+  .imgs button { position: absolute; top: 2px; right: 2px; padding: 0 .45rem; font-size: .7rem; background: rgba(6,6,10,.85); }
+  #log {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    background: rgba(6,6,10,.94); border-top: 1px solid var(--line);
+    padding: .5rem 1.2rem; font-size: .72rem; color: var(--dim);
+    max-height: 8.5em; overflow-y: auto; backdrop-filter: blur(8px);
+  }
+  #log .ok { color: var(--ok); } #log .err { color: var(--accent); }
+  .hint { font-size: .72rem; color: var(--dim); margin-top: .4rem; }
+  .hint a { color: var(--text); }
+  .actions { display: flex; gap: .7rem; margin-top: 1.4rem; flex-wrap: wrap; }
+  .checkline { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; }
+  .checkline input { width: auto; }
+  .checkline label { margin: 0; display: inline; }
+  .topbar { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  #whoami { color: var(--ok); font-size: .75rem; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div>
+      <h1>AK<span class="accent">//</span> admin — projects</h1>
+      <p class="sub">changes commit to <b>01End/Portfolio</b> and auto-deploy in ~1 minute</p>
+    </div>
+    <span id="whoami"></span>
+  </div>
+
+  <fieldset id="auth-box">
+    <legend>access</legend>
+    <label for="token">github fine-grained token (contents: read &amp; write, only this repo)</label>
+    <input type="password" id="token" placeholder="github_pat_…" autocomplete="off" />
+    <div class="checkline">
+      <input type="checkbox" id="remember" />
+      <label for="remember">remember on this device</label>
+    </div>
+    <div class="actions">
+      <button class="primary" id="connect">connect</button>
+      <button id="logout" style="display:none">disconnect</button>
+    </div>
+    <p class="hint">
+      Create one at GitHub → Settings → Developer settings → Fine-grained tokens:
+      Repository access = <b>Only select repositories → 01End/Portfolio</b>,
+      Permissions → Repository permissions → <b>Contents: Read and write</b>. Nothing else.
+      The token stays in this browser only — there is no password in the site to crack;
+      GitHub itself is the lock.
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>projects</legend>
+    <div class="plist" id="plist">loading…</div>
+    <div class="actions"><button class="primary" id="new">+ new project</button></div>
+  </fieldset>
+
+  <fieldset id="editor" style="display:none">
+    <legend id="editor-legend">new project</legend>
+    <div class="row3">
+      <div><label>title</label><input type="text" id="f-title" /></div>
+      <div><label>id (slug)</label><input type="text" id="f-id" /></div>
+      <div><label>year</label><input type="text" id="f-year" /></div>
+    </div>
+    <div class="row3">
+      <div><label>category</label>
+        <select id="f-category">
+          <option value="ml">ml / ai</option>
+          <option value="fullstack">full-stack</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div><label>hue (cover tint 0–360)</label><input type="text" id="f-hue" value="200" /></div>
+      <div class="checkline" style="align-self:end"><input type="checkbox" id="f-featured" /><label for="f-featured">featured (full-width)</label></div>
+    </div>
+    <label>tagline (one line under the title)</label><input type="text" id="f-tagline" />
+    <label>description (modal intro)</label><textarea id="f-description"></textarea>
+    <label>problem</label><textarea id="f-problem"></textarea>
+    <label>approach</label><textarea id="f-approach"></textarea>
+    <label>results</label><textarea id="f-results"></textarea>
+    <label>tech (comma separated)</label><input type="text" id="f-tech" placeholder="Python, scikit-learn, Streamlit" />
+    <div class="row">
+      <div><label>github url</label><input type="url" id="f-github" /></div>
+      <div><label>live url (optional)</label><input type="url" id="f-live" /></div>
+    </div>
+    <label>screenshots (first = cover; resized to webp automatically)</label>
+    <input type="file" id="f-files" multiple accept="image/*" />
+    <div class="imgs" id="f-imgs"></div>
+    <div class="actions">
+      <button class="primary" id="save">save &amp; publish</button>
+      <button id="cancel">cancel</button>
+      <button class="danger" id="delete" style="display:none">delete project</button>
+    </div>
+  </fieldset>
+
+  <div id="log"></div>
+
+<script>
+(() => {
+  const OWNER = '01End', REPO = 'Portfolio', BRANCH = 'master';
+  const JSON_PATH = 'src/data/projects.json';
+  const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+  const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/${BRANCH}/public/`;
+
+  const $ = (id) => document.getElementById(id);
+  const log = (msg, cls = '') => {
+    const d = document.createElement('div');
+    if (cls) d.className = cls;
+    d.textContent = `> ${msg}`;
+    $('log').appendChild(d);
+    $('log').scrollTop = 1e9;
+  };
+
+  let token = sessionStorage.getItem('ak_pat') || localStorage.getItem('ak_pat') || '';
+  let projects = [];
+  let jsonSha = null;
+  let editing = null;       // project object being edited (null = new)
+  let pendingImages = [];   // { name, base64 } new uploads
+  let keptImages = [];      // existing image paths kept
+
+  const headers = () => ({
+    Accept: 'application/vnd.github+json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  });
+
+  async function gh(path, opts = {}) {
+    const res = await fetch(API + path, { ...opts, headers: { ...headers(), ...(opts.headers || {}) } });
+    if (!res.ok && res.status !== 404) throw new Error(`${res.status} ${(await res.json().catch(() => ({}))).message || ''}`);
+    return res;
+  }
+
+  // ---- auth ----------------------------------------------------------
+  async function connect(tok, remember) {
+    const res = await fetch('https://api.github.com/user', { headers: { Authorization: `Bearer ${tok}` } });
+    if (!res.ok) { log('token rejected by GitHub', 'err'); return false; }
+    const user = await res.json();
+    token = tok;
+    (remember ? localStorage : sessionStorage).setItem('ak_pat', tok);
+    $('whoami').textContent = `connected as ${user.login}`;
+    $('logout').style.display = '';
+    $('connect').style.display = 'none';
+    $('token').value = '••••••••';
+    $('token').disabled = true;
+    log(`connected as ${user.login}`, 'ok');
+    return true;
+  }
+
+  $('connect').onclick = async () => {
+    const t = $('token').value.trim();
+    if (!t || t.startsWith('•')) return log('paste a token first', 'err');
+    await connect(t, $('remember').checked);
+  };
+
+  $('logout').onclick = () => {
+    localStorage.removeItem('ak_pat');
+    sessionStorage.removeItem('ak_pat');
+    location.reload();
+  };
+
+  // ---- data ----------------------------------------------------------
+  async function loadProjects() {
+    const res = await gh(`${JSON_PATH}?ref=${BRANCH}`);
+    if (res.status === 404) { log('projects.json not found in repo', 'err'); return; }
+    const data = await res.json();
+    jsonSha = data.sha;
+    projects = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\n/g, '')), (c) => c.charCodeAt(0))));
+    renderList();
+    log(`loaded ${projects.length} projects (sha ${jsonSha.slice(0, 7)})`);
+  }
+
+  function renderList() {
+    const el = $('plist');
+    el.innerHTML = '';
+    projects.forEach((p, i) => {
+      const d = document.createElement('div');
+      d.className = 'pitem';
+      d.innerHTML = `
+        <div class="grow">
+          <div class="t">${p.title} ${p.featured ? '<span class="badge">featured</span>' : ''}</div>
+          <div class="m">${p.id} · ${p.category} · ${p.year} · ${(p.images || []).length} image(s)</div>
+        </div>
+        <button data-a="up" title="move up">↑</button>
+        <button data-a="down" title="move down">↓</button>
+        <button data-a="edit">edit</button>`;
+      d.querySelectorAll('button').forEach((b) => (b.onclick = () => action(b.dataset.a, i)));
+      el.appendChild(d);
+    });
+  }
+
+  async function action(a, i) {
+    if (a === 'edit') return openEditor(projects[i]);
+    if (a === 'up' && i > 0) [projects[i - 1], projects[i]] = [projects[i], projects[i - 1]];
+    if (a === 'down' && i < projects.length - 1) [projects[i + 1], projects[i]] = [projects[i], projects[i + 1]];
+    renderList();
+    if (!token) return log('order changed locally — connect to publish', 'err');
+    await saveJson(`content: reorder projects via admin`);
+  }
+
+  // ---- editor ---------------------------------------------------------
+  const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  function openEditor(p) {
+    editing = p || null;
+    pendingImages = [];
+    keptImages = p ? [...(p.images || [])] : [];
+    $('editor').style.display = '';
+    $('editor-legend').textContent = p ? `edit — ${p.id}` : 'new project';
+    $('delete').style.display = p ? '' : 'none';
+    $('f-title').value = p?.title || '';
+    $('f-id').value = p?.id || '';
+    $('f-id').disabled = !!p;
+    $('f-year').value = p?.year || String(new Date().getFullYear());
+    $('f-category').value = p?.category || 'ml';
+    $('f-hue').value = p?.hue ?? 200;
+    $('f-featured').checked = !!p?.featured;
+    $('f-tagline').value = p?.tagline || '';
+    $('f-description').value = p?.description || '';
+    $('f-problem').value = p?.problem || '';
+    $('f-approach').value = p?.approach || '';
+    $('f-results').value = p?.results || '';
+    $('f-tech').value = (p?.tech || []).join(', ');
+    $('f-github').value = p?.github || '';
+    $('f-live').value = p?.live || '';
+    $('f-files').value = '';
+    renderImages();
+    $('editor').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function renderImages() {
+    const box = $('f-imgs');
+    box.innerHTML = '';
+    keptImages.forEach((path, i) => {
+      const f = document.createElement('figure');
+      f.innerHTML = `<img src="${RAW}${path}" alt="" /><button title="remove">×</button>`;
+      f.querySelector('button').onclick = () => { keptImages.splice(i, 1); renderImages(); };
+      box.appendChild(f);
+    });
+    pendingImages.forEach((img, i) => {
+      const f = document.createElement('figure');
+      f.innerHTML = `<img src="data:image/webp;base64,${img.base64}" alt="" /><button title="remove">×</button>`;
+      f.querySelector('button').onclick = () => { pendingImages.splice(i, 1); renderImages(); };
+      box.appendChild(f);
+    });
+  }
+
+  $('f-title').addEventListener('input', () => {
+    if (!editing && !$('f-id').dataset.touched) $('f-id').value = slug($('f-title').value);
+  });
+  $('f-id').addEventListener('input', () => ($('f-id').dataset.touched = 1));
+
+  $('f-files').addEventListener('change', async (e) => {
+    for (const file of e.target.files) {
+      log(`processing ${file.name}…`);
+      pendingImages.push({ name: file.name, base64: await toWebp(file) });
+    }
+    e.target.value = '';
+    renderImages();
+  });
+
+  // resize to ≤1600px wide webp — keeps commits and page loads light
+  function toWebp(file) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, 1600 / img.width);
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * scale);
+        c.height = Math.round(img.height * scale);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        c.toBlob((blob) => {
+          const r = new FileReader();
+          r.onload = () => resolve(r.result.split(',')[1]);
+          r.onerror = reject;
+          r.readAsDataURL(blob);
+        }, 'image/webp', 0.82);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
+  }
+
+  // ---- persistence -----------------------------------------------------
+  async function putFile(path, base64, message, sha) {
+    const res = await gh(path, {
+      method: 'PUT',
+      body: JSON.stringify({ message, content: base64, branch: BRANCH, ...(sha ? { sha } : {}) }),
+    });
+    return (await res.json()).content?.sha;
+  }
+
+  async function saveJson(message) {
+    const body = JSON.stringify(projects, null, 2) + '\n';
+    const b64 = btoa(String.fromCharCode(...new TextEncoder().encode(body)));
+    try {
+      const res = await gh(JSON_PATH, {
+        method: 'PUT',
+        body: JSON.stringify({ message, content: b64, branch: BRANCH, sha: jsonSha }),
+      });
+      jsonSha = (await res.json()).content.sha;
+      log(`${message} — published ✓ (site rebuilds in ~1 min)`, 'ok');
+    } catch (err) {
+      log(`save failed: ${err.message} — refetching and retrying…`, 'err');
+      const cur = await (await gh(`${JSON_PATH}?ref=${BRANCH}`)).json();
+      jsonSha = cur.sha;
+      const res2 = await gh(JSON_PATH, {
+        method: 'PUT',
+        body: JSON.stringify({ message, content: b64, branch: BRANCH, sha: jsonSha }),
+      });
+      jsonSha = (await res2.json()).content.sha;
+      log(`${message} — published on retry ✓`, 'ok');
+    }
+  }
+
+  $('save').onclick = async () => {
+    if (!token) return log('connect with your token first', 'err');
+    const id = slug($('f-id').value || $('f-title').value);
+    if (!id || !$('f-title').value.trim()) return log('title and id are required', 'err');
+    if (!editing && projects.some((p) => p.id === id)) return log(`id "${id}" already exists`, 'err');
+    $('save').disabled = true;
+    try {
+      // upload new images first
+      const uploaded = [];
+      for (let i = 0; i < pendingImages.length; i++) {
+        const name = `${Date.now().toString(36)}-${i + 1}.webp`;
+        const repoPath = `public/projects/${id}/${name}`;
+        log(`uploading image ${i + 1}/${pendingImages.length}…`);
+        await putFile(repoPath, pendingImages[i].base64, `content: image for ${id}`);
+        uploaded.push(`projects/${id}/${name}`);
+      }
+      const proj = {
+        id,
+        title: $('f-title').value.trim(),
+        category: $('f-category').value,
+        featured: $('f-featured').checked,
+        hue: Math.max(0, Math.min(360, parseInt($('f-hue').value, 10) || 0)),
+        year: $('f-year').value.trim() || String(new Date().getFullYear()),
+        tagline: $('f-tagline').value.trim(),
+        description: $('f-description').value.trim(),
+        problem: $('f-problem').value.trim(),
+        approach: $('f-approach').value.trim(),
+        results: $('f-results').value.trim(),
+        tech: $('f-tech').value.split(',').map((s) => s.trim()).filter(Boolean),
+        images: [...keptImages, ...uploaded],
+        github: $('f-github').value.trim(),
+        live: $('f-live').value.trim(),
+      };
+      const idx = editing ? projects.findIndex((p) => p.id === editing.id) : -1;
+      if (idx >= 0) projects[idx] = proj;
+      else projects.push(proj);
+      await saveJson(`content: ${editing ? 'update' : 'add'} project ${id} via admin`);
+      editing = null;
+      $('editor').style.display = 'none';
+      renderList();
+    } catch (err) {
+      log(`failed: ${err.message}`, 'err');
+    } finally {
+      $('save').disabled = false;
+    }
+  };
+
+  $('delete').onclick = async () => {
+    if (!editing || !token) return;
+    if (!confirm(`Delete "${editing.title}" from the site? Its images stay in the repo.`)) return;
+    projects = projects.filter((p) => p.id !== editing.id);
+    await saveJson(`content: remove project ${editing.id} via admin`);
+    editing = null;
+    $('editor').style.display = 'none';
+    renderList();
+  };
+
+  $('cancel').onclick = () => { editing = null; $('editor').style.display = 'none'; };
+  $('new').onclick = () => openEditor(null);
+
+  // ---- boot ------------------------------------------------------------
+  (async () => {
+    if (token) await connect(token, !!localStorage.getItem('ak_pat'));
+    try { await loadProjects(); }
+    catch (err) { log(`could not load projects: ${err.message}`, 'err'); }
+  })();
+})();
+</script>
+</body>
+</html>

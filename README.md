@@ -20,7 +20,13 @@ Everything you'd ever want to change lives in two files:
 | File | Controls |
 |---|---|
 | `src/data/site.js` | Name, title, tagline, about text, stats, skills, socials, accent color, CV link, HUD clock label/timezone |
-| `src/data/projects.js` | Every project card, the featured gallery, filters, and modals |
+| `src/data/projects.json` | Every project card, the work showcase, and modals |
+
+### The admin page — `/admin.html`
+
+Manage projects from the browser at **`https://01end.github.io/Portfolio/admin.html`**: add/edit/delete/reorder projects, upload screenshots (auto-resized to webp), and publish — every save is a git commit that auto-deploys in ~1 minute.
+
+**Access:** paste a GitHub **fine-grained personal access token** (GitHub → Settings → Developer settings → Fine-grained tokens → Repository access: *Only 01End/Portfolio*, Permissions: *Contents — Read and write*, nothing else). The token lives only in your browser (session or device storage — your choice). There is no password stored in the site to crack: GitHub performs the authentication, and the page is inert without a valid token.
 
 ### Add a new project
 
