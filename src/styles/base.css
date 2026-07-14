@@ -214,7 +214,8 @@ html.no-anim .reveal-line > span { transform: none; }
   left: 0;
   right: 0;
   height: 2px;
-  z-index: var(--z-nav);
+  /* above the nav so its glow isn't smeared by the nav's backdrop blur */
+  z-index: calc(var(--z-nav) + 1);
   pointer-events: none;
 }
 
@@ -222,7 +223,7 @@ html.no-anim .reveal-line > span { transform: none; }
   height: 100%;
   width: 0%;
   background: var(--accent);
-  box-shadow: 0 0 12px var(--accent);
+  box-shadow: 0 0 6px var(--accent);
 }
 
 .epoch-label {

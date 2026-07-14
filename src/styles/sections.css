@@ -225,6 +225,10 @@ html.no-anim .hero-name .char { transform: none; }
   max-width: 900px;
 }
 
+.hero-sub > * {
+  min-width: 0; /* flex items must be allowed to shrink on small screens */
+}
+
 .hero-title {
   font-family: var(--font-mono);
   font-size: 0.95rem;
@@ -236,7 +240,7 @@ html.no-anim .hero-name .char { transform: none; }
 
 .hero-tagline {
   color: var(--text-dim);
-  max-width: 46ch;
+  max-width: min(46ch, 100%);
   font-size: 1rem;
 }
 
@@ -655,6 +659,13 @@ section {
 
   .hud-item { display: none; }
   .bp-cross { display: none; }
+
+  /* the display font runs wide — vw-only sizing so nothing overflows */
+  .hero-name { font-size: 13vw; }
+  .hero-title { white-space: normal; }
+  /* Syne 800 runs ~1em/char — sized to the longest unbreakable word */
+  .section-title { font-size: 7.5vw; }
+  .contact-title { font-size: 9vw; }
 
   .w-meta { flex-direction: column; gap: 0.35rem; }
   .w-info { order: -1; }
