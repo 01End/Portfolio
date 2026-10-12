@@ -28,7 +28,7 @@ Everything you'd ever want to change lives in two files:
 
 ### The admin page — `/admin.html`
 
-Manage projects from the browser at **`https://01end.github.io/Portfolio/admin.html`**: add/edit/delete/reorder projects, upload screenshots (auto-resized to webp), and publish — every save is a git commit that auto-deploys in ~1 minute.
+Manage projects from the browser at **`https://ahmedkh11.vercel.app/admin.html`**: add/edit/delete/reorder projects, upload screenshots (auto-resized to webp), and publish — every save is a git commit that auto-deploys in ~1 minute.
 
 **Access:** paste a GitHub **fine-grained personal access token** (GitHub → Settings → Developer settings → Fine-grained tokens → Repository access: *Only 01End/Portfolio*, Permissions: *Contents — Read and write*, nothing else). The token lives only in your browser (session or device storage — your choice). There is no password stored in the site to crack: GitHub performs the authentication, and the page is inert without a valid token.
 
@@ -54,4 +54,4 @@ Override for demos/testing: append `?motion=1` (force full motion) or `?motion=0
 
 ## Deploy
 
-Pushing to `master` on GitHub triggers `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages (enable **Settings → Pages → Source: GitHub Actions** once).
+Hosted on [Vercel](https://vercel.com) at **https://ahmedkh11.vercel.app** — every push to `master` (including admin-page saves) deploys automatically, and other branches get preview URLs. The legacy GitHub Pages workflow (`.github/workflows/deploy.yml`) still runs until Pages is switched off.

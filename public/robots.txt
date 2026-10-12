@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://01end.github.io/Portfolio/sitemap.xml
+Sitemap: https://ahmedkh11.vercel.app/sitemap.xml
